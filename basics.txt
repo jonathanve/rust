@@ -1,0 +1,66 @@
+Rust Programming Language
+
+Videos:
+https://www.youtube.com/watch?v=d1uraoHM8Gg
+https://www.youtube.com/watch?v=O5vzLKg7y-k
+
+Rust gives your data property abstractions
+No runtime, memory safety and data-race freedom
+Control and Safety with zero-cost abstractions
+
+Problems occur when both:
+
+Aliasing (pointing to the same data)
+Mutation (changing data)
+
+Rust makes sure both do not happen at the same time
+If it compiles, it is safe code
+Who owns the mutable reference can r/w
+Concurrent programs can also produce aliasing/mutation errors
+
+Concepts:
+
+var (give)      ownership
+&var (show)     shared borrow (data immutable)
+&mut var (lend) mutable borrow
+
+Ownership
+  No Aliasing since only 1 owns the variable
+Borrowing: 
+  No Mutation since anyone can see, but no one can mutate var
+Concurrency
+  All concurrency types are provided as libraries, not in std
+  Data race evil -> multiple reading shared data and at least 1 writes
+  Data race = Aliasing + Mutation + Unsynchronized
+
+  Messaging (ownership)
+    Moving data around with only 1 owner at any time
+    Passing ownership between (Actor model)
+    Sender <-> Channel <-> Receiver
+  Shared read-only access (ownership, borrowing)
+    Share once and everyone has access (immutable data)
+    ARC (Atomically Reference Counted) Arc<Vec<i32>
+    If no one is reading anymore, resource can be destroyed
+  Locked mutable access (ownership, borrowing)
+    Only one can mutate the data at any time, gives ownership back
+    Mutexes, Locking and Sync abstractions (&Mutex<Vec<i32>>)
+    Thread safety checking fn transfer<T: Send>(t: T)
+    As a thread I can say any sendable type to other threads
+    Rc<Vec<i32>> !Send so we can't transfer this to others
+    Rc counts do not leave the threads where they live
+Unsafe
+  When the strict concepts of ownership and borrowing do not apply
+  Trust unsafe code, not written in rust, to execute
+  Interfacing with C code for instance
+  Rust provides safe abstractions using unsafe code given trust
+  In practice, pure Rust does not need unsafe code
+  Only use unsafe to call external libs (C)
+  Or use it extend the programming model given we know it is indeed safe
+  Compiler does not know everything and we can create new things as humans
+
+Today
+
+Cargo is Rust package manager (dependencies, builds)
+Visit crates.io and review all crates (rust libs)
+High-level features with low-level control
+Rust offer deterministic destruction, data race freedom, iterator invalidation
