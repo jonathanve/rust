@@ -1,8 +1,8 @@
 /*
     Workspaces: Interrelated packages that evolve together
-    Packages: Cargo features to build, test, shara crates
+    Packages: Cargo features to build, test, share crates
     Crates: Set of modules that produces a binary or library
-    Modules: Contain files and scope and paths are defined
+    Modules: Contain files. Scopes and paths are defined
     Paths: Naming of items and privacy
 
     Rules:

@@ -15,7 +15,7 @@ Mutation (changing data)
 
 Rust makes sure both do not happen at the same time
 If it compiles, it is safe code
-Who owns the mutable reference can r/w
+Who owns the mutable reference can read/write (r/w)
 Concurrent programs can also produce aliasing/mutation errors
 
 Concepts:
@@ -29,12 +29,14 @@ Ownership
 Borrowing: 
   No Mutation since anyone can see, but no one can mutate var
 Concurrency
-  All concurrency types are provided as libraries, not in std
+  All concurrency types are provided as libraries, not in the std lib
   Data race evil -> multiple reading shared data and at least 1 writes
   Data race = Aliasing + Mutation + Unsynchronized
+  Conflict-free replicated data type (CRDT) can be implemented
+  CRDT is used for eventual consistency given concurrent updates to shared state from multiple clients
 
   Messaging (ownership)
-    Moving data around with only 1 owner at any time
+    Moving data around with only 1 owner at any point of time
     Passing ownership between (Actor model)
     Sender <-> Channel <-> Receiver
   Shared read-only access (ownership, borrowing)
@@ -42,12 +44,11 @@ Concurrency
     ARC (Atomically Reference Counted) Arc<Vec<i32>
     If no one is reading anymore, resource can be destroyed
   Locked mutable access (ownership, borrowing)
-    Only one can mutate the data at any time, gives ownership back
+    Only 1 can mutate the data at any time, gives ownership back
     Mutexes, Locking and Sync abstractions (&Mutex<Vec<i32>>)
     Thread safety checking fn transfer<T: Send>(t: T)
-    As a thread I can say any sendable type to other threads
+    As a thread I can define which types are sendable
     Rc<Vec<i32>> !Send so we can't transfer this to others
-    Rc counts do not leave the threads where they live
 Unsafe
   When the strict concepts of ownership and borrowing do not apply
   Trust unsafe code, not written in rust, to execute
@@ -61,6 +62,7 @@ Unsafe
 Today
 
 Cargo is Rust package manager (dependencies, builds)
-Visit crates.io and review all crates (rust libs)
+Visit crates.io and review all crates (reuse functionality)
 High-level features with low-level control
 Rust offer deterministic destruction, data race freedom, iterator invalidation
+It is modern (Structs, Enums, Tools)
