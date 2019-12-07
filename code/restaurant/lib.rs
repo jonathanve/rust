@@ -4,7 +4,7 @@ Module tree
 crate
     front_of_house
         hosting
-        hosting
+        serving
 
 like a unix directory tree
 one can write the directory and bodies with {}
